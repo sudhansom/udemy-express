@@ -108,7 +108,21 @@ const getOneUser = async (req, res, next) => {
     res.status(200).json({user: user});
 }
 
+const deleteOneUser = async (req, res, next) => {
+    let user;
+    try{
+        user = await Person.findByIdAndDelete(req.params.id);
+    }catch(err){
+        return next(new HttpError('Error deleting, try again later', 500))
+    }
+    if(!user){
+        return next(new HttpError('no user found...', 404));
+    }
+    res.status(200).json({user: user});
+}
+
 exports.getAllUsers = getAllUsers;
 exports.createUsers = createUsers;
 exports.updateUser = updateUser;
 exports.getOneUser = getOneUser;
+exports.deleteOneUser = deleteOneUser;

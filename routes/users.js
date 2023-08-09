@@ -22,6 +22,7 @@ route.post(
     
 route.get('/', userController.getAllUsers);
 route.get('/:id', userController.getOneUser);
+route.delete('/:id', userController.deleteOneUser);
 
 route.put(
     '/:id',
@@ -35,6 +36,7 @@ route.put(
         check('password').isLength({ min: 6})
     ],
      userController.updateUser);
+
 
 
 module.exports = route;

@@ -1,11 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const UserRoute = require('./routes/users');
 
 const app = express();
 
-app.use('/api/users', (req, res, next)=>{
-    res.json({message: "Users...."});
-})
+app.use('/api/users', UserRoute);
 
 
 app.listen(5001, ()=>{

@@ -10,6 +10,14 @@ app.use(bodyParser.json());
 app.use('/api/users', UserRoute);
 app.use('/api/places', PlaceRoute);
 
+app.use((error, req, res, next) => {
+    if(res.headerSent){
+        return next(error);
+    }
+    res.status(error.code || 500);
+    res.json({message: error.message || 'An unknown error occurred.'});
+})
+
 
 app.listen(5001, ()=>{
     console.log(`server running at 5000`);

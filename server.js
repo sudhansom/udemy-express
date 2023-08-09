@@ -6,6 +6,7 @@ const connectDb = require('./config/db')
 
 const app = express();
 
+app.use(bodyParser.json());
 app.use('/api/users', UserRoute);
 app.use('/api/places', PlaceRoute);
 

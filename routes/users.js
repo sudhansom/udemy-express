@@ -18,6 +18,7 @@ route.post(
         check('password').isLength({ min: 6})
     ],
     userController.createUsers);
+    
 route.get('/', userController.getAllUsers);
 
 module.exports = route;

@@ -1,10 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const UserRoute = require('./routes/users');
+const PlaceRoute = require('./routes/place');
 
 const app = express();
 
 app.use('/api/users', UserRoute);
+app.use('/api/places', PlaceRoute);
 
 
 app.listen(5001, ()=>{

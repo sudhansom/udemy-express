@@ -36,7 +36,8 @@ const createUsers = async (req, res, next) => {
         return next(error); // can do in one line: return next( new HttpError('', 500))
     }
     if(existingUser){
-        return (new HttpError('user already exists', 422));
+        
+        return next(new HttpError('user already exists', 422));
     }
 
     const newPerson = new Person({

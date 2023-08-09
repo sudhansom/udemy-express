@@ -8,6 +8,7 @@ const HttpError = require('./models/http-errors');
 const app = express();
 
 app.use(bodyParser.json());
+
 app.use('/api/users', UserRoute);
 app.use('/api/places', PlaceRoute);
 

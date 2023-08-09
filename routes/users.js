@@ -18,7 +18,23 @@ route.post(
         check('password').isLength({ min: 6})
     ],
     userController.createUsers);
+
     
 route.get('/', userController.getAllUsers);
+route.get('/:id', userController.getOneUser);
+
+route.put(
+    '/:id',
+    [
+        check('name')
+            .not()
+            .isEmpty(),
+        check('email')
+            .normalizeEmail() // Test@test.com => test@test.com
+            .isEmail(),
+        check('password').isLength({ min: 6})
+    ],
+     userController.updateUser);
+
 
 module.exports = route;

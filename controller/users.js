@@ -55,5 +55,60 @@ const createUsers = async (req, res, next) => {
     res.status(201).json({person: newPerson.toObject({getters: true})});
 }
 
+const updateUser = async(req, res, next) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return next(
+            new HttpError('Invalid inputs passed...', 422)
+        );
+    }
+
+    let user;
+    try{
+        user = await Person.findById(req.params.id);
+    }catch(err){
+        const error = new HttpError('Could not find user', 500);
+        return next(error);
+    }
+    user.name = req.body.name;
+    user.password = req.body.password;
+    user.address = req.body.address;
+    user.email = req.body.email;
+    if(!user){
+        return next(new HttpError('no user found...', 404));
+    }
+    try{
+        await user.save();
+        // user = await Person.updateOne
+        // (
+        //     {id: req.params.id},
+        //     {
+        //         $set: {
+        //             name: req.body.name,
+        //             password: req.body.password,
+        //             address: req.body.address,
+        //             email: req.body.email,
+        //         },
+        //     }
+        // );
+    }catch(err){
+        return next(new HttpError('Error updating user', 500));
+    }
+    res.status(200).send(user);
+}
+
+const getOneUser = async (req, res, next) => {
+    const id = req.params.id;
+    let user;
+    try {
+        user = await Person.findById(id);
+    }catch(err){
+        return next(new HttpError('Error finding user', 500));
+    }
+    res.status(200).json({user: user});
+}
+
 exports.getAllUsers = getAllUsers;
 exports.createUsers = createUsers;
+exports.updateUser = updateUser;
+exports.getOneUser = getOneUser;
